@@ -5,7 +5,6 @@ import RegistrationValidator from 'App/Validators/Users/RegistrationValidator'
 export default class RegisterController {
   public async handle({ response, request }: HttpContextContract) {
     await request.validate(RegistrationValidator)
-      console.log(request.only(['name', 'email', 'password']))
     return response.send({
       user: await User.create(request.only(['name', 'email', 'password'])),
     })

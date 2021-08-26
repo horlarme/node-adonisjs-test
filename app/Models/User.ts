@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, beforeSave, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Transaction from 'App/Models/Transaction'
+import Beneficiaries from 'Database/migrations/1630015980416_beneficiaries'
+import Beneficiary from 'App/Models/Beneficiary'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -28,4 +30,9 @@ export default class User extends BaseModel {
     foreignKey: 'sender_id',
   })
   public transactions: HasMany<typeof Transaction>
+
+  @hasMany(() => Beneficiary, {
+    foreignKey: 'user_id',
+  })
+  public beneficiaries: HasMany<typeof Beneficiary>
 }

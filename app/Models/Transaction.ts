@@ -12,8 +12,7 @@ export default class Transaction extends BaseModel {
   }
 
   @column({ isPrimary: true })
-  public id: number
-
+  public id: string
   @column()
   public sender_id: number
   @column()
@@ -22,6 +21,8 @@ export default class Transaction extends BaseModel {
   public amount: number
   @column()
   public type: 'debit' | 'credit'
+  @column()
+  public completed: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -30,11 +31,14 @@ export default class Transaction extends BaseModel {
   public updatedAt: DateTime
 
   @belongsTo(() => User, {
-    localKey: 'sender_id',
+    localKey: 'id',
+    foreignKey: 'sender_id',
   })
   public sender: BelongsTo<typeof User>
+
   @belongsTo(() => User, {
-    localKey: 'receiver_id',
+    foreignKey: 'receiver_id',
+    localKey: 'id',
   })
   public receiver: BelongsTo<typeof User>
 }
